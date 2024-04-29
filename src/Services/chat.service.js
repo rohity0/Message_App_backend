@@ -33,7 +33,7 @@ const existgroupChatService = async (chatId, userId) => {
       users: { $elemMatch: { $eq: userId } },
     });
     if (chat) {
-      return ChatModel.findByIdAndUpdate(chatId, { $pull: { users: userId } });
+      return ChatModel.findByIdAndUpdate(chatId, { $pull: { users: userId } },{ new: true });
     }
   } catch (err) {
     throw err;
@@ -51,7 +51,7 @@ const joingroupChatService = async (chatId, userId) => {
     if (!chat) {
       return ChatModel.findByIdAndUpdate(chatId, {
         $addToSet: { users: userId },
-      });
+      },{ new: true });
     }
   } catch (err) {
     throw err;
